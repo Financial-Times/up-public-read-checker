@@ -15,9 +15,14 @@ import (
 )
 
 var (
+	contentUUID = "bd1cecf2-893e-11e6-8cb7-e7ada1d123b1" //TODO: use the same value as in pingdom?
+	listUUID    = "f91b1e6a-5e21-11e6-a72a-bd4bf1198c63"
+
 	urlList = [][]string{
-		{"lists", "/__document-store-api/lists/f91b1e6a-5e21-11e6-a72a-bd4bf1198c63"},
-		{"content", "/__document-store-api/content/bd1cecf2-893e-11e6-8cb7-e7ada1d123b1"},
+		{"lists", "/__document-store-api/lists/" + listUUID},
+		{"content", "/__document-store-api/content/" + contentUUID},
+		{"enriched content", "/__enriched-content-read-api/enrichedcontent/" + contentUUID},
+		{"concordances", "/__public-concordances-api/__gtg"},
 	}
 )
 
