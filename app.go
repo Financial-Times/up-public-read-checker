@@ -42,10 +42,11 @@ func main() {
 		EnvVar: "USER",
 	})
 	password := app.String(cli.StringOpt{
-		Name:   "password",
-		Value:  "",
-		Desc:   "Password for basic auth in outgoing check requests",
-		EnvVar: "PASSWORD",
+		Name:      "password",
+		Value:     "",
+		Desc:      "Password for basic auth in outgoing check requests",
+		EnvVar:    "PASSWORD",
+		HideValue: true,
 	})
 
 	app.Action = func() {
