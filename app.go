@@ -10,7 +10,6 @@ import (
 
 	fthealth "github.com/Financial-Times/go-fthealth/v1a"
 	status "github.com/Financial-Times/service-status-go/httphandlers"
-	"github.com/gorilla/mux"
 	"github.com/jawher/mow.cli"
 )
 
@@ -65,11 +64,9 @@ func main() {
 func runServer(baseURL string, port int, user, password string) {
 	log.Printf("starting on port %d\n", port)
 
-	servicesRouter := mux.NewRouter()
-
 	hcs := makeHealthChecks(baseURL, user, password)
 
-	servicesRouter.HandleFunc("/__health", fthealth.Handler("Public API Checker healthchecks",
+	http.HandleFunc("/__health", fthealth.Handler("Public API Checker healthchecks",
 		"Checks for accessing public API endpoints", hcs...))
 
 	http.HandleFunc(status.PingPath, status.PingHandler)
@@ -78,8 +75,6 @@ func runServer(baseURL string, port int, user, password string) {
 	http.HandleFunc(status.BuildInfoPathDW, status.BuildInfoHandler)
 	g := &gtg{hcs}
 	http.HandleFunc("/__gtg", g.serve)
-
-	http.Handle("/", servicesRouter)
 
 	if err := http.ListenAndServe(fmt.Sprintf(":%d", port), nil); err != nil {
 		log.Fatalf("Unable to start server: %v", err)
