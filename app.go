@@ -128,6 +128,9 @@ func checkHTTPOK(urlString, user, password string) (string, error) {
 	}
 
 	resp, err := http.DefaultClient.Do(req)
+	if err != nil {
+		return err.Error(), err
+	}
 
 	defer func() {
 		_, _ = io.Copy(ioutil.Discard, resp.Body)
