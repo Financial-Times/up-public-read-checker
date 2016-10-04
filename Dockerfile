@@ -1,6 +1,6 @@
 FROM alpine:3.4
 
-ENV SOURCE_DIR /public-read-checker-src
+ENV SOURCE_DIR /up-public-read-checker-src
 
 ADD *.go .git $SOURCE_DIR/
 
@@ -17,7 +17,7 @@ RUN apk add --update bash \
   && LDFLAGS="-X '"${BUILDINFO_PACKAGE}$VERSION"' -X '"${BUILDINFO_PACKAGE}$DATETIME"' -X '"${BUILDINFO_PACKAGE}$REPOSITORY"' -X '"${BUILDINFO_PACKAGE}$REVISION"' -X '"${BUILDINFO_PACKAGE}$BUILDER"'" \
   && cd .. \
   && export GOPATH=/gopath \
-  && REPO_PATH="github.com/Financial-Times/public-read-checker" \
+  && REPO_PATH="github.com/Financial-Times/up-public-read-checker" \
   && mkdir -p $GOPATH/src/${REPO_PATH} \
   && cp -r $SOURCE_DIR/* $GOPATH/src/${REPO_PATH} \
   && cd $GOPATH/src/${REPO_PATH} \
@@ -25,7 +25,7 @@ RUN apk add --update bash \
   && cd $GOPATH/src/${REPO_PATH} \
   && echo ${LDFLAGS} \
   && go build -ldflags="${LDFLAGS}" \
-  && mv public-read-checker / \
+  && mv up-public-read-checker / \
   && apk del go git \
   && rm -rf $GOPATH /var/cache/apk/*
-CMD [ "/public-read-checker" ]
+CMD [ "/up-public-read-checker" ]
